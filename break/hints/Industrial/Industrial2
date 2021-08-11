@@ -1,0 +1,6 @@
+
+When you bootstrap a cluster, how does it know where the DNS server will be? 
+Is it a static IP address or something? 
+Where would you even set that?
+
+Feels like you need to go back to a file you've edited before... Hello kubelet my old friend

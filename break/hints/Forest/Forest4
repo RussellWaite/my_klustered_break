@@ -1,0 +1,14 @@
+
+You are probably frustrated now, sorry-ish
+
+putting a "\" before a command will stop aliases being processed
+
+e.g. \alias
+
+I aimed for strength in depth on the alias part, and yes I even aliased the alias command.
+
+I'd also maybe not trust echo, cat, grep, unalias, nano, type, ... I think you get the idea.
+
+I was going to do it with vim too and change the file argument you requested to edit, but I thought that a bit too mean.
+
+Oh and if you think kubelet is looking at /etc/kubernetes/manifests thanks to cat, you might want to re-examine that file with vim

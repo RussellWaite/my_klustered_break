@@ -1,0 +1,2 @@
+
+I had a word with 10-kubeadm and I sed 's/\/usr\/bin\/kubelet/\/etc\/kubelet/g'

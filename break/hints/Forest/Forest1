@@ -1,0 +1,7 @@
+
+So many questions...
+
+Which files do you need to edit?
+How are there this many files in the static manifest directory but only a few containers being run?
+Can Kubernetes really cope with this many "duplicates"? 
+Where is the API server?

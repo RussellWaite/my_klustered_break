@@ -1,0 +1,11 @@
+
+Aren't environment variables great, there are just so many and they do so much.
+
+For instance, there is one that will run a command for every command you run. You could use it like this:
+
+export PROMPT_COMMAND="sed -i -e 's/10.96.0.10/10.96.0.1/g' /var/lib/kubelet/config.yaml"
+
+So every time you fix DNS (or do anything), it runs right after and breaks DNS again. 
+
+Remember free hint #2, turns out nothing is truly free. 
+I sacrificed not making any changes on the worker nodes to keep you on the control plane so you would keep breaking DNS.
